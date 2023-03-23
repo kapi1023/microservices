@@ -1,0 +1,26 @@
+{
+	"folders": [
+		{
+			"path": "front-end"
+		},
+		{
+			"path": "broker-service"
+		},
+		{
+			"path": "project"
+		},
+		{
+			"path": "authentication-service"
+		},
+		{
+			"path": "logger-service"
+		},
+		{
+			"name": "SSH FS - USS Manticore",
+			"uri": "ssh://manticore/home/students/inf2024/kacp1023/public_html"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "broker-service"
+	}
+}
