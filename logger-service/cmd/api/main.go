@@ -2,9 +2,12 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
+	"net/http"
 	"time"
 
+	"github.com/kapi1023/logger-service/data"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -19,6 +22,7 @@ const (
 var client *mongo.Client
 
 type Config struct {
+	Models data.Models
 }
 
 func main() {
@@ -37,7 +41,36 @@ func main() {
 			panic(err)
 		}
 	}()
+
+	app := Config{
+		Models: data.New(client),
+	}
+	// start web  server
+	//go app.serve()
+
+	log.Println("Starting service on port", webPort)
+	srv := &http.Server{
+		Addr:    fmt.Sprintf(":%s", webPort),
+		Handler: app.routes(),
+	}
+	err = srv.ListenAndServe()
+	if err != nil {
+		log.Panic("logger")
+	}
 }
+
+/*
+func (app *Config) serve() {
+	srv := &http.Server{
+		Addr:    fmt.Sprintf(":%s", webPort),
+		Handler: app.routes(),
+	}
+	err := srv.ListenAndServe()
+	if err != nil {
+		log.Panic("logger")
+	}
+}
+*/
 
 func connectToMongoDB() (*mongo.Client, error) {
 	//connection options
@@ -52,6 +85,7 @@ func connectToMongoDB() (*mongo.Client, error) {
 		log.Println("Error connecting to MongoDB")
 		return nil, err
 	}
+	log.Println("Logged in")
 	return conn, nil
 
 }
