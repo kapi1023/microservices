@@ -14,10 +14,6 @@
 		},
 		{
 			"path": "logger-service"
-		},
-		{
-			"name": "SSH FS - USS Manticore",
-			"uri": "ssh://manticore/home/students/inf2024/kacp1023/public_html"
 		}
 	],
 	"settings": {
